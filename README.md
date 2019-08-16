@@ -19,14 +19,7 @@ Note that there are still many elements of the build setup that could be further
 `docker run -t planalyzer ./build_and_test.sh`
 
 ## Analyzing scripts
-Before you begin, you will need to acquire some PlanOut scripts. 
-We will be maintaining a [repository of anonymized PlanOut scripts](https://github.com/etosch/PlanOutScripts).  
-
-Note: `planalyzer` currently only runs on serialized PlanOut code. We will support a version
- that runs on the raw PlanOut language when a version of the PlanOut compiler is 
- [available on the appropriate packaging system](https://github.com/facebook/planout/issues/91).
- In the meantime, the PlanOut compiler can be [installed from source](https://github.com/facebook/planout/tree/master/compiler) 
- via the [PlanOut repository](https://github.com/facebook/planout). 
+Before you begin, you will need to acquire some PlanOut scripts. There are some examples in the testing code and in our paper.
  
 `planalyzer path/to/script.json -report`
 
