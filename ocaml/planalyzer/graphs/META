@@ -1,0 +1,12 @@
+# OASIS_START
+# DO NOT EDIT (digest: 03a5a9c5b9871203d76d292f127a6221)
+version = "0.2"
+description = "Static analyzer for PlanOut scripts."
+requires = "dolog sexplib core threads"
+archive(byte) = "graphs.cma"
+archive(byte, plugin) = "graphs.cma"
+archive(native) = "graphs.cmxa"
+archive(native, plugin) = "graphs.cmxs"
+exists_if = "graphs.cma"
+# OASIS_STOP
+

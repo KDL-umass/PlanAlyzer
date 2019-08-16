@@ -1,0 +1,357 @@
+OASISFormat:  0.4
+OCamlVersion: >= 4.02.1
+Name:         planalyzer
+Version:      0.2
+Synopsis:     Static analyzer for PlanOut scripts.
+Authors:      Emma Tosch
+License:      BSD-3-clause
+Description:  Statically analyzes PlanOut scripts, computing propensity scores, assessing between vs. within subjects analyses, and generating causal estimators.
+Homepage:     http://kdl-umass.github.io/planalyzer
+Plugins:      Meta (0.4), DevFiles (0.4)
+BuildTools:   ocamlbuild, ocamldoc, ocamldebug
+AlphaFeatures: ocamlbuild_more_args #, compiled_setup_ml
+
+SourceRepository master
+  Type: git
+  Location: https://github.com/etosch/PlanAlyzer.git
+  Branch: master
+  Browser: https://github.com/etosch/PlanAlyzer
+
+Executable planalyzer
+  Install: true
+  Path: planalyzer
+  MainIs: planalyzer.ml
+  CompiledObject: byte
+  BuildDepends:
+    core,
+    dolog,
+    ppx_deriving.show,
+    sexplib,
+    str,
+    threads, # Required for core
+    utils,
+    yaml,
+    yojson
+
+Library utils 
+  Install: true
+  Path: planalyzer/utils
+  Modules: 
+    Utils,
+    Logging,
+    Performance
+  BuildDepends:
+    dolog,
+    ppx_deriving.show,
+    ppx_sexp_conv,
+    sexplib,
+    str
+
+Library oratio
+  Install: true
+  Path: planalyzer/oratio
+  Modules:
+    Oratio
+  BuildDepends:
+    ppx_deriving.show,
+    threads
+
+Library annotations
+  Install: true
+  Path: planalyzer/annotations
+  Modules: 
+    Config
+  BuildDepends:
+    core,
+    fieldslib,
+    oratio,
+    ppx_deriving.make,
+    ppx_deriving.show,
+    ppx_fields_conv,
+    ppx_sexp_conv,
+    rresult, 
+    sexplib,
+    utils,
+    yaml,
+    yojson  
+
+Library corepo
+  Install: true
+  Path: planalyzer/corepo
+  Modules:
+    Corepo,
+    Exceptions,
+    Smtlib
+  BuildDepends:
+    annotations,
+    graphs,
+    oratio,
+    ppx_deriving.make,
+    ppx_sexp_conv,
+    sexplib,
+    utils
+
+Library planout
+  Install: true
+  Path: planalyzer/planout
+  Modules: 
+    Po_syntax,
+    Po_parse,
+    Po_normalize,
+    Po_format,
+    Po_eval,
+    Po_ddg,
+    Po_aux,
+    Po_ast,
+    Po_basetypes,
+    Po_env,
+    Po_transform
+  BuildDepends:
+    annotations,
+    corepo,
+    dolog,
+    graphs,
+    oratio,
+    sexplib,
+    ppx_sexp_conv,
+    ppx_deriving.show,
+    utils
+
+Library estimators
+  Install: true
+  Path: planalyzer/estimators
+  Modules: 
+    Assumptions,
+    Ate
+  BuildDepends:
+    corepo,
+    dolog,
+    graphs
+
+Library targets 
+  Install: false 
+  Path: planalyzer
+  Modules: 
+    Targets
+  BuildDepends:
+    estimators,
+    planout,
+    ppx_sexp_conv,
+    sexplib
+
+Library graphs
+  Install: true
+  Path: planalyzer/graphs
+  Modules: 
+    Cgm,
+    Ddg
+  BuildDepends:
+    dolog,
+    sexplib,
+    core,
+    threads
+
+Executable "test_utils"
+  Path: test
+  MainIs: test_utils.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit, 
+    utils
+
+
+Executable "test_ate"
+  Path: test
+  MainIs: test_ate.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit, 
+    estimators,
+    targets
+
+Executable "test_oratio"
+  Path: test
+  MainIs: test_oratio.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit,
+    oratio,
+    str
+
+Executable "test_annotations"
+  Path: test
+  MainIs: test_annotations.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit,
+    planout,
+    annotations,
+    str
+
+Executable "test_graph"
+  Path: test
+  MainIs: test_graph.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit,
+    graphs
+
+Executable "test_ddg"
+  Path: test
+  MainIs: test_ddg.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit,
+    graphs,
+    planout
+
+Executable "test_cgm"
+  Path: test
+  MainIs: test_cgm.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oUnit,
+    graphs,
+    str,
+    corepo
+
+Executable "test_ast_aux"
+  Path: test
+  MainIs: test_ast_aux.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oratio,
+    oUnit, 
+    planout,
+    str
+
+Executable "test_ast_normalize"
+  Path: test
+  MainIs: test_ast_normalize.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oratio,
+    oUnit, 
+    planout,
+    str
+
+Executable "test_ast_parse"
+  Path: test
+  MainIs: test_ast_parse.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oratio,
+    oUnit, 
+    planout,
+    str,
+    async_unix,
+    core,
+    sexplib,
+    threads
+
+Executable "test_transform"
+  Path: test
+  MainIs: test_transform.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends:
+    oratio,
+    oUnit, 
+    planout,
+    str
+
+Executable "test_semantics"
+  Path: test 
+  MainIs: test_semantics.ml
+  Build$: flag(tests)
+  CompiledObject: byte
+  Install: false
+  BuildDepends:
+    oUnit,
+    corepo,
+    planout,
+    str
+
+Executable "test_ast_eval"
+  Path: test
+  MainIs: test_ast_eval.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends: 
+    oratio,
+    oUnit,
+    planout,
+    str
+
+Test "test_annotations"
+  Run$: flag(tests) 
+  TestTools: test_annotations
+  Command: $test_annotations
+  WorkingDirectory: test
+
+Test "test_graph"
+  Run$: flag(tests)
+  Command: $test_graph
+  WorkingDirectory: test
+
+Test "test_ddg"
+  Run$: flag(tests)
+  Command: $test_ddg
+  WorkingDirectory: test
+
+Test "test_ast"
+  Run$: flag(tests)
+  Command: $test_ast_aux && $test_ast_parse && $test_ast_normalize
+  WorkingDirectory: test
+
+Test "test_transform"
+  Run$: flag(tests)
+  Command: $test_transform -runner sequential
+  WorkingDirectory: test
+
+Test "test_semantics"
+  Run$: flag(tests)
+  Command: $test_semantics -runner sequential
+  WorkingDirectory: test
+
+Test "test_oratio"
+  Run$: flag(tests)
+  Command: $test_oratio
+  WorkingDirectory: test 
+
+Test "test_ate"
+  Run$: flag(tests)
+  Command: $test_ate -runner sequential
+  WorkingDirectory: test
+
+Test "test_cgm"
+  Run$: flag(tests)
+  Command: $test_cgm
+  WorkingDirectory: test
+
+Test "test_ast_eval"
+  Run$: flag(tests)
+  Command: $test_ast_eval 
+  WorkingDirectory: test

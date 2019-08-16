@@ -1,0 +1,27 @@
+S planalyzer
+S planalyzer/annotations
+S planalyzer/corepo
+S planalyzer/estimators
+S planalyzer/graphs
+S planalyzer/oratio
+S planalyzer/planout
+S planalyzer/qualifiers
+S planalyzer/utils
+S test
+
+B _build/planalyzer
+B _build/planalyzer/corepo
+B _build/planalyzer/annotations
+B _build/planalyzer/estimators
+B _build/planalyzer/graphs
+B _build/planalyzer/oratio
+B _build/planalyzer/planout
+B _build/planalyzer/qualifiers
+B _build/planalyzer/utils
+B _build/test
+
+PKG Sexplib Core Yojson Dolog Ounit Ppx_sexp_conv Ppx_fields_conv Ppx_deriving 
+PKG Yaml Yaml_unix 
+PKG fieldslib
+PKG ppx_deriving.std
+PKG ppx_deriving.show
