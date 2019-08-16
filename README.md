@@ -16,6 +16,7 @@ Note that there are still many elements of the build setup that could be further
 
 ## Tests
 
+`docker run -t planalyzer ./build_and_test.sh`
 
 ## Analyzing scripts
 Before you begin, you will need to acquire some PlanOut scripts. 
@@ -29,8 +30,9 @@ Note: `planalyzer` currently only runs on serialized PlanOut code. We will suppo
  
 `planalyzer path/to/script.json -report`
 
+You can run this command after spinning up a prompt:
 
-docker run -i -t planalyzer /bin/bash 
+`docker run -i -t planalyzer /bin/bash`
 
 ## Using annotations 
 
